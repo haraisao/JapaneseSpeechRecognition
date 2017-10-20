@@ -269,7 +269,11 @@ class RecaiusTts():
      self._auth=RecaiusAuth(service_id, passwd)
      self._lang = language
      self._token = ''
-     self._uuid = ''
+
+     self._speaker_id={ 'male' : { 'ja_JP':'ja_JP-M0001-H00T' },
+                       'female' : { 'ja_JP':'ja_JP-F0006-C53T', 'en_US' : 'en_US-F0001-H00T',
+                                    'zh_CN':'zh_CN-en_US-F0002-H00T', 'fr_FR' : 'fr_FR-F0001-H00T'}
+                           }
 
      opener = urllib2.build_opener(urllib2.HTTPSHandler(debuglevel=0),
                              urllib2.HTTPCookieProcessor(cookielib.CookieJar()))
@@ -337,8 +341,18 @@ class RecaiusTts():
        return ""
      else:
        response = result.read()
-       return response
+       return response[64:]
 
+  def getSpeakerId(self, ch, lang):
+    return self._speaker_id[ch][lang]
+ 
+  def getaudio(self, text, fname, speaker_id):
+    data = self.text2speech(text, speaker_id)
+    print fname
+    if data :
+       saveWavData(fname, data)
+    return
+#
 
 #
 #
