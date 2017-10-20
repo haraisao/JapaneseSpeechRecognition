@@ -447,6 +447,6 @@ if __name__ == '__main__':
   f=open(name+".txt")
   txt = f.read()
   f.close()
-  main_tts('haraisao_MAaE6CS4y7', 'isao11038867',txt, name+".wav")
+  main_tts('service_id', 'pass',txt, name+".wav")
 
 
