@@ -47,10 +47,10 @@ class RecaiusAuth():
        return True
   #
   #
-  def refreshAuthToken(self):
+  def refreshAuthToken(self,srv):
      url = self._baseAuthUrl+'tokens'
      headers = {'Content-Type' : 'application/json', 'X-Token' : self._token }
-     data = { "speech_recog_jaJP": { "service_id" : self._service_id, "password" : self._passwd} }
+     data = { srv : { "service_id" : self._service_id, "password" : self._passwd} }
 
      request = urllib2.Request(url, data=json.dumps(data), headers=headers)
      request.get_method = lambda : 'PUT'
@@ -116,7 +116,7 @@ class RecaiusAsr():
      return res
 
   def refreshAuthToken(self):
-     return self._auth.refreshAuthToken()
+     return self._auth.refreshAuthToken("speech_recog_jaJP")
 
     
   def checkAuthToken(self):
@@ -289,7 +289,7 @@ class RecaiusTts():
      return res
 
   def refreshAuthToken(self):
-     return self._auth.refreshAuthToken()
+     return self._auth.refreshAuthToken("speech_synthesis")
 
     
   def checkAuthToken(self):
@@ -341,7 +341,7 @@ class RecaiusTts():
        return ""
      else:
        response = result.read()
-       return response[64:]
+       return response
 
   def getSpeakerId(self, ch, lang):
     return self._speaker_id[ch][lang]
@@ -371,11 +371,8 @@ def getWavData(fname):
 #
 def saveWavData(fname, data):
     try:
-        f = wave.Wave_write(fname)
-        f.setnchannels(1)
-        f.setsampwidth(2)
-        f.setframerate(16000)
-        f.writeframes(data)
+        f=open(fname, 'wb')
+        f.write(data)
         f.close()
         return True
     except:
