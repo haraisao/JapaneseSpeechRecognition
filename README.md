@@ -7,3 +7,7 @@ Currently I support following services:
  3. Julius Cloud Server (Use Julius, my original service supported by PyWebSock)
  
  
+
+
+Copyright (c) 2017 Isao Hara
+Released under the MIT license
