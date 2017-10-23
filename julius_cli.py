@@ -96,9 +96,9 @@ def main():
 #  Main
 #
 if __name__ == '__main__':
-  req = JuliusCli('hara.jpn.com')
+  req = JuliusCli(sys.argv[1])
 
-  data = getWavData(sys.argv[1])
+  data = getWavData(sys.argv[2])
   result=req.request_asr(data)
 
   show_result( ''.join(result) )
